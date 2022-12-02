@@ -1,6 +1,6 @@
 import app from './firebase.js';
 import { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, push, remove } from 'firebase/database';
+import { getDatabase, ref, onValue, push, remove, off } from 'firebase/database';
 import Form from './Form.js';
 import './App.css';
 
@@ -13,6 +13,7 @@ function App() {
   useEffect( () => {
     const database = getDatabase(app);
     const dbRef = ref(database);
+    
 
     onValue(dbRef, (response) => {
       // console.log(response.val());
@@ -27,6 +28,7 @@ function App() {
       }
 
       setToDoItem(updatedDbInfo);
+      
 
     })
   }, [] ); //! put loggedin when finish login section
@@ -39,11 +41,16 @@ function App() {
     event.preventDefault();
 
     const database = getDatabase(app);
-    const dbRef = ref(database);
-
-    push(dbRef, userInput);
+    const dbRef = ref(database); 
 
     setUserInput('');
+
+    if(userInput.length !== 0) {
+      push(dbRef, userInput);
+    } else {
+      alert('pleaase put some text into form');
+      // alert.className.add('alert')
+    }
 
   }
 
@@ -53,14 +60,25 @@ function App() {
 
     remove(dbRef)
   }
+  // ************************ LOG IN ************************
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userName, setUserName] = useState( '' );
 
+  const handleClick = () => {
+    setLoggedIn(!loggedIn);
+  }
+
+  
 
   return (
     <div className="App">
-      <div className="wrapper">
         <header>
+
+        <button onClick={handleClick}>Click Me</button>
+
           <h1>Make your priority list for today</h1>
         </header>
+      <div className="wrapper">
         <main>
         <section className="form">
           <Form 
@@ -68,6 +86,10 @@ function App() {
           userInput={userInput}
           handleSubmit={handleSubmit}
           />
+          <div className="alert">
+            <p>Please enter text into tex area</p>
+            <span>X</span>
+          </div>
         </section>
         <section className="list">
           <ol>
@@ -75,7 +97,7 @@ function App() {
               return (   
                 <div className="listContainer">
                 <li key={toDo.key}>
-                  <p>{toDo.name}</p>
+                  <p>{toDo.name} | {toDo.key} </p>
                 </li>
                 <button onClick={ () => handleRemoveToDoItem(toDo.key)} className="removeBotton">X</button>
                 </div>             
@@ -87,7 +109,7 @@ function App() {
       </div> {/*End .wrapper */}
       <footer>
         <p>Copyright&copy; <a href="https://junocollege.com/">Juno College of Technology </a>
-            Created by <a href="https://radoyko.com">Radojko Raulovic</a></p>
+            Created by <a href="https://radoyko.com">Radojko Radulovic</a></p>
       </footer>
 
     </div>
