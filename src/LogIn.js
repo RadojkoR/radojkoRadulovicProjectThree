@@ -7,7 +7,7 @@ const LogIn = ({handleLogIn, userName, loggedIn, handleUserName,inputUserNameCha
                 <label htmlFor="userName">User Name</label>
                 <input type="text" id="userName" onChange={inputUserNameChange}  value={userName}/>
             </form>
-            <button onClick={handleLogIn}>Log In</button>
+            {/* <button onClick={handleLogIn}>Log In</button> */}
             <button onClick={handleUserName}>Set your user name</button>
             {
                 loggedIn === true ? <p>hello, {userName}</p> : <p>please log in</p>
