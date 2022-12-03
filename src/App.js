@@ -2,18 +2,21 @@ import app from './firebase.js';
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue, push, remove, off } from 'firebase/database';
 import Form from './Form.js';
+import LogIn from './LogIn.js';
 import './App.css';
 
 function App() {
 
   const [toDoItems, setToDoItem] = useState([]);
-
   const [userInput, setUserInput] = useState( '' );
+  // ************************ LOG IN ************************
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userName, setUserName] = useState( '' );
+  const [userNameInput, setUserNameInput] = useState([])
 
   useEffect( () => {
     const database = getDatabase(app);
     const dbRef = ref(database);
-    
 
     onValue(dbRef, (response) => {
       // console.log(response.val());
@@ -27,11 +30,29 @@ function App() {
         updatedDbInfo.push({key: key, name:data[key]});
       }
 
+      
+
+      if(loggedIn === true) {
+      setUserName();
       setToDoItem(updatedDbInfo);
+      console.log(updatedDbInfo)
+    } else {
+      //! setUserName('')
+      setToDoItem([]);
+    }
       
 
     })
-  }, [] ); //! put loggedin when finish login section
+  }, [loggedIn] ); //! put loggedin when finish login section
+
+const handleLogIn = () => {
+    setLoggedIn(!loggedIn);
+  }
+
+  const handleUserName = () => {
+    // setUserName(`${userName}`);
+  }
+
 
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
@@ -43,7 +64,7 @@ function App() {
     const database = getDatabase(app);
     const dbRef = ref(database); 
 
-    setUserInput('');
+    // setUserInput('');
 
     if(userInput.length !== 0) {
       push(dbRef, userInput);
@@ -61,12 +82,25 @@ function App() {
     remove(dbRef)
   }
   // ************************ LOG IN ************************
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState( '' );
-
-  const handleClick = () => {
-    setLoggedIn(!loggedIn);
+  const inputUserNameChange = (event) => {
+    console.log(event.target.value);
+    // setUserName(event)
   }
+
+  // useEffect( () => {
+    
+  // });
+
+  // useEffect(() => {
+  //   if(loggedIn === true) {
+  //     setUserName("radojko")
+  //   } else {
+  //     setUserName('')
+  //   }
+  // }, [loggedIn]);
+
+
+  
 
   
 
@@ -74,9 +108,15 @@ function App() {
     <div className="App">
         <header>
 
-        <button onClick={handleClick}>Click Me</button>
-
           <h1>Make your priority list for today</h1>
+
+        <LogIn 
+        handleLogIn={handleLogIn} 
+        handleUserName={handleUserName}
+        userName={userName} 
+        loggedIn={loggedIn}
+        inputUserNameChange={inputUserNameChange}
+        />
         </header>
       <div className="wrapper">
         <main>
