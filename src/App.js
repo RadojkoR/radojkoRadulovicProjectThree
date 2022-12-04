@@ -1,10 +1,73 @@
 import app from './firebase.js';
 import { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, push, remove, off } from 'firebase/database';
+import { getDatabase, ref, onValue, push, remove, off, set, get } from 'firebase/database';
 import Form from './Form.js';
+import LogIn from './LogIn.js';
 import './App.css';
 
+    const database = getDatabase(app);
+    const dbRef = ref(database);
+
 function App() {
+
+  const [userName, setUserName] = useState( {} );
+
+
+  const handleNewUserName = (event) => {
+    setUserName(event.target.value)
+    // console.log(event.target.value);
+  };
+  // Handle Submit user Name
+  const handleSubmitUserName = (event) => {
+    event.preventDefault();
+ 
+
+    const childNodeRef = ref(database, `/users/${userName}`);
+
+    const newUser = {
+      todoOne:'football',
+      todo:'ema'
+    }
+    if(userName.length !== 0) {
+      set(childNodeRef, newUser);
+    } else {
+      alert('pleaase put some text into form');
+      // alert.className.add('alert')
+    }
+
+    
+    // console.log(childNodeRef);
+
+    setUserName('');
+  
+  };
+
+
+  
+
+
+
+
+
+
+
+  // Conect data from database
+  useEffect( () => {
+    const database = getDatabase(app)
+    const dbRef = ref(database)
+
+    onValue(dbRef, (response) => {
+      console.log(response.val());
+
+    })
+    console.log(dbRef);
+  });
+
+  
+
+  // userName.map( (name) => {
+    
+  // });
 
   const [toDoItems, setToDoItem] = useState([]);
 
@@ -12,22 +75,13 @@ function App() {
 
   useEffect( () => {
     const database = getDatabase(app);
-    const dbRef = ref(database);
+    const dbRef = ref(database, '/users');
     
 
     onValue(dbRef, (response) => {
-      // console.log(response.val());
+      console.log(response.val());
 
-      const data = response.val();
 
-      const updatedDbInfo = []
-
-      for (let key in data) {
-        
-        updatedDbInfo.push({key: key, name:data[key]});
-      }
-
-      setToDoItem(updatedDbInfo);
       
 
     })
@@ -41,7 +95,7 @@ function App() {
     event.preventDefault();
 
     const database = getDatabase(app);
-    const dbRef = ref(database); 
+    const dbRef = ref(database,"/users/David"); 
 
     setUserInput('');
 
@@ -61,12 +115,12 @@ function App() {
     remove(dbRef)
   }
   // ************************ LOG IN ************************
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState( '' );
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [userName, setUserName] = useState( '' );
 
-  const handleClick = () => {
-    setLoggedIn(!loggedIn);
-  }
+  // const handleClick = () => {
+  //   setLoggedIn(!loggedIn);
+  // }
 
   
 
@@ -74,9 +128,15 @@ function App() {
     <div className="App">
         <header>
 
-        <button onClick={handleClick}>Click Me</button>
+        {/* <button onClick={handleClick}>Click Me</button> */}
 
           <h1>Make your priority list for today</h1>
+          <LogIn 
+          handleNewUserName={handleNewUserName}
+          handleSubmitUserName={handleSubmitUserName}
+          />
+          {/* <p>{userName}</p> */}
+
         </header>
       <div className="wrapper">
         <main>
@@ -93,7 +153,7 @@ function App() {
         </section>
         <section className="list">
           <ol>
-            {toDoItems.map( (toDo) => {
+            {/* {toDoItems.map( (toDo) => {
               return (   
                 <div className="listContainer">
                 <li key={toDo.key}>
@@ -102,7 +162,7 @@ function App() {
                 <button onClick={ () => handleRemoveToDoItem(toDo.key)} className="removeBotton">X</button>
                 </div>             
               )
-            } )}
+            } )} */}
           </ol>
         </section>
         </main>
