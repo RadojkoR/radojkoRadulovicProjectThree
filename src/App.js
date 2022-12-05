@@ -49,7 +49,6 @@ function App() {
       push(dbRef, userInput);
     } else {
       alert('pleaase put some text into form');
-      // alert.className.add('alert')
     }
 
   }
@@ -60,21 +59,12 @@ function App() {
 
     remove(dbRef)
   }
-  // ************************ LOG IN ************************
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState( '' );
-
-  const handleClick = () => {
-    setLoggedIn(!loggedIn);
-  }
 
   
 
   return (
     <div className="App">
         <header>
-
-        <button onClick={handleClick}>Click Me</button>
 
           <h1>Make your priority list for today</h1>
         </header>
