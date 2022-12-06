@@ -2,14 +2,56 @@ import app from './firebase.js';
 import { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue, push, remove } from 'firebase/database';
 import Form from './Form.js';
+import LogIn from './LogIn.js';
+import DatePicker from './DatePicker.js';
 import './App.css';
 
 function App() {
+  // const [Cdate, setDate] = useState(new Date().toLocaleDateString('fr-FR'));
+
+  // console.log(selectedDate);
+  
 
   const [toDoItems, setToDoItem] = useState([]);
 
   const [userInput, setUserInput] = useState( '' );
+  // USERS
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
 
+
+  useEffect( () => {
+    console.log('component rendered');
+  });
+
+  useEffect( () => {
+      if(loggedIn === true) {
+        setUserName('Ja')
+      } else {
+        setUserName('')
+      }
+  }, [loggedIn])
+
+
+  const handleLogIn = () => {
+    setLoggedIn(!loggedIn);
+  }
+
+  const handleSubmitUserName = () => {
+    setUserName(`${userName} :)`);
+  }
+
+  
+
+
+
+
+
+
+
+
+
+  // TO DO LIST
   useEffect( () => {
     const database = getDatabase(app);
     const dbRef = ref(database);
@@ -67,9 +109,23 @@ function App() {
         <header>
 
           <h1>Make your priority list for today</h1>
+           {
+                loggedIn === true ? <p>hello, {userName}</p> : <p>please log in</p>
+            }
+           
+            <p>{userName}</p>
+            
+          <LogIn 
+          handleLogIn={handleLogIn}
+          loggedIn={loggedIn}
+          handleSubmitUserName={handleSubmitUserName}
+          />
         </header>
       <div className="wrapper">
         <main>
+          <div className="datePickerContainer">
+              <DatePicker />             
+          </div>
         <section className="form">
           <Form 
           handleInputChange={handleInputChange}
