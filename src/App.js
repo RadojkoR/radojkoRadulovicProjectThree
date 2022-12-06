@@ -5,7 +5,7 @@ import Form from './Form.js';
 import './App.css';
 
 function App() {
-
+  // Step 2: Set up a stateful variables to hold our To do list
   const [toDoItems, setToDoItem] = useState([]);
 
   const [userInput, setUserInput] = useState( '' );
@@ -27,11 +27,10 @@ function App() {
         updatedDbInfo.push({key: key, name:data[key]});
       }
 
-      setToDoItem(updatedDbInfo);
-      
+      setToDoItem(updatedDbInfo);      
 
     })
-  }, [] ); //! put loggedin when finish login section
+  }, [] );
 
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
@@ -60,12 +59,9 @@ function App() {
     remove(dbRef)
   }
 
-  
-
   return (
     <div className="App">
         <header>
-
           <h1>Make your priority list for today</h1>
         </header>
       <div className="wrapper">
@@ -113,7 +109,7 @@ export default App;
 
 // Step 1: Import our app from firebase.js
         // Import useState and useEfect
-// Step 2: Set up a stateful variables to hold our To do list information from form
+// Step 2: Set up a stateful variables to hold our To do list
 
 // Step 3: Map through it and display the TO DO LIST on the page
 
