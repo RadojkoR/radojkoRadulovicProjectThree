@@ -32,7 +32,6 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-
 }
 label {
   font-size: 2rem;
@@ -63,25 +62,6 @@ input {
   background-color: #3d3e42;
   color: #ff5722;
 }
-.alert {
-  width: 50%;
-  padding: 100px 50px;
-  background-color: #1d41d4;
-  color: #f9f9f9;
-  position: absolute;
-  top: 30vh;
-  left: 40vh;
-  visibility: hidden;
-}
-.alert span {
-position: absolute;
-right: 10px;
-top: 10px;
-font-size: 2rem;
-color: #ff5722;
-cursor: pointer;
-padding: 10px;
-}
 .list {
   padding: 100px 0;
 }
@@ -101,9 +81,6 @@ li p {
   padding: 10px;
   margin: 0;
 }
-/* .listContainer:hover {
-  background-color: #bbbbbb;
-} */
 .removeBotton {
   width: 40px;
   padding: 5px;
@@ -123,8 +100,7 @@ li p {
 footer p {
   padding: 20px 0;
 }
- footer p a {
+footer p a {
   color: #f9f9f9;
   text-decoration: none;
- }
-
+}
