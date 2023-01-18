@@ -2,6 +2,8 @@ import app from "./firebase.js";
 import { useState, useEffect } from "react";
 import { getDatabase, ref, onValue, push, remove } from "firebase/database";
 import Form from "./Form.js";
+import LogInForm from "./LogInForm.js";
+import SingUpForm from "./SingUp.js";
 import "./App.css";
 
 function App() {
@@ -55,7 +57,9 @@ function App() {
   return (
     <div className="App">
       <header>
+        <SingUpForm />
         <h1>Make your priority list for today</h1>
+        <LogInForm />
       </header>
       <div className="wrapper">
         <main>
