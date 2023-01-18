@@ -5,15 +5,15 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCbgJr2GwUctf9GvdP5TVUG6I-SwdqxD0U",
-  authDomain: "radojko-project-three.firebaseapp.com",
-  projectId: "radojko-project-three",
-  storageBucket: "radojko-project-three.appspot.com",
-  messagingSenderId: "790246152034",
-  appId: "1:790246152034:web:92a886cce50e6ab8127e3b"
+  apiKey: "AIzaSyDdtE71565lt8dHP0lfY1yuprm3VK3l0fM",
+  authDomain: "priority-list-f7319.firebaseapp.com",
+  databaseURL: "https://priority-list-f7319-default-rtdb.firebaseio.com",
+  projectId: "priority-list-f7319",
+  storageBucket: "priority-list-f7319.appspot.com",
+  messagingSenderId: "1097658329478",
+  appId: "1:1097658329478:web:3ffb010aaa8289e5126407"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 export default app;
